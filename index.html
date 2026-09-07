@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Saya</title>
+    <!-- Menghubungkan ke file CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+</head>
+<body>
+
+    <div class="container">
+        <!-- Menu Navigasi -->
+        <nav class="navbar">
+            <button class="nav-btn active" onclick="switchPage('beranda', this)">Beranda</button>
+            <button class="nav-btn" onclick="switchPage('sertifikat', this)">Sertifikat</button>
+            <button class="nav-btn" onclick="switchPage('galeri', this)">Galeri</button>
+        </nav>
+
+        <!-- Halaman Beranda -->
+        <div id="beranda" class="page active-page">
+            <div class="profile-container">
+                <img src="poto/0.jpeg" alt="Foto Profil" class="profile-pic">
+            </div>
+            <div>
+                <h2>✨ Tentang Saya</h2>
+                <p>Selamat datang di halaman website saya! Saya adalah seorang pelajar dari <strong>SMKN 3 SOPPENG</strong>. Saat ini sedang mendalami ilmu pembuatan website mulai dari dasar HTML, CSS, hingga publikasi menggunakan GitHub.</p>
+                <p class="quote">Belajar adalah proses seumur hidup, dan membagikan ilmu adalah cara terbaik untuk terus berkembang! 🌟</p>
+            </div>
+        </div>
+
+        <!-- Halaman Sertifikat -->
+        <div id="sertifikat" class="page">
+            <h2>📜 Sertifikat Saya</h2>
+            <p>.</p>
+        </div>
+
+        <!-- link media-->
+        <div id="galeri" class="page">
+            <h2></h2>
+            <p>.</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function switchPage(pageId, element) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active-page'));
+
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(pageId).classList.add('active-page');
+            element.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
