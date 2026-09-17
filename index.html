@@ -6,7 +6,6 @@
     <title>Profil Saya</title>
     <!-- Menghubungkan ke file CSS -->
     <link rel="stylesheet" href="style.css">
-    
 </head>
 <body>
 
@@ -16,12 +15,13 @@
             <button class="nav-btn active" onclick="switchPage('beranda', this)">Beranda</button>
             <button class="nav-btn" onclick="switchPage('sertifikat', this)">Sertifikat</button>
             <button class="nav-btn" onclick="switchPage('galeri', this)">Galeri</button>
+            <button class="nav-btn" onclick="switchPage('bukutamu', this)">Buku Tamu</button>
         </nav>
 
         <!-- Halaman Beranda -->
         <div id="beranda" class="page active-page">
             <div class="profile-container">
-                <img src="0.jpeg" alt="Foto Profil" class="profile-pic">
+                <img src="poto/0.jpeg" alt="Foto Profil" class="profile-pic">
             </div>
             <div>
                 <h2>✨ Tentang Saya</h2>
@@ -41,6 +41,26 @@
             <h2></h2>
             <p>.</p>
         </div>
+
+        <!-- Halaman Buku Tamu -->
+        <div id="bukutamu" class="page">
+            <h2>📖 Buku Tamu Digital</h2>
+            <p>Silakan tinggalkan nama dan pesan Anda di bawah ini:</p>
+            <div class="info-list" style="margin-top: 15px;">
+                <form id="bukuTamuForm">
+                    <div style="margin-bottom: 15px;">
+                        <label for="Nama" style="display: block; margin-bottom: 5px; font-weight: bold;">Nama:</label>
+                        <input type="text" id="Nama" name="Nama" required placeholder="Masukkan nama kamu..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label for="Pesan" style="display: block; margin-bottom: 5px; font-weight: bold;">Pesan:</label>
+                        <textarea id="Pesan" name="Pesan" required placeholder="Tulis pesan atau kesan..." style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; height: 100px; resize: vertical;"></textarea>
+                    </div>
+                    <button type="submit" id="submitBtn" style="width: 100%; padding: 12px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">Kirim Pesan</button>
+                </form>
+                <div id="status" style="text-align: center; margin-top: 15px; font-size: 14px;"></div>
+            </div>
+        </div>
     </div>
 
     <!-- JavaScript -->
@@ -55,6 +75,42 @@
             document.getElementById(pageId).classList.add('active-page');
             element.classList.add('active');
         }
+
+        // URL Google Apps Script terbaru
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwLdwDh_OKANnk8UGPcsAX5moSMA8BqPhiKp9Nv_Xji0Ye3sHfGrWEI8Q1-rk11PF9C/exec';
+        
+        const form = document.getElementById('bukuTamuForm');
+        const btn = document.getElementById('submitBtn');
+        const statusDiv = document.getElementById('status');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.textContent = 'Mengirim...';
+            statusDiv.textContent = '';
+
+            // Mengubah data form menjadi format URL Parameters agar kompatibel dengan Apps Script
+            const formData = new URLSearchParams(new FormData(form));
+
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: formData 
+            })
+            .then(response => {
+                statusDiv.style.color = 'green';
+                statusDiv.textContent = 'Terima kasih! Pesan berhasil dikirim.';
+                form.reset();
+                btn.disabled = false;
+                btn.textContent = 'Kirim Pesan';
+            })
+            .catch(error => {
+                statusDiv.style.color = 'red';
+                statusDiv.textContent = 'Gagal mengirim pesan. Silakan coba lagi.';
+                btn.disabled = false;
+                btn.textContent = 'Kirim Pesan';
+                console.error('Error!', error.message);
+            });
+        });
     </script>
 
 </body>
